@@ -7,6 +7,9 @@ public class TCPoverUDPUtils{
     public static final int DATAGRAM_BUFFER_SIZE = 4096;
 
     public static TransportStrategy getTransportStrategy(){
+	// OneByOneStrategy() is an example way server sends the file to client
+	// comment out OneByOneStrategy() and uncomment StudentStrategy() to 
+	// load your own strategy
         return new OneByOneStrategy();
         //return new StudentStrategy();
     }

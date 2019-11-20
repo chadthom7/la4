@@ -7,7 +7,9 @@ public class StudentServerStrategy implements ServerStrategy{
 	int cwnd = 1;
 	int ssthresh = 32;
 	
-	int bad_rtt_count = 0;
+	int RTT = 0;
+	
+	int[] bad_rtt_count;
 	boolean timeout = false;
 	// ssthresh = ssthresh/2; cwnd = 1; slowStart = true;
 	boolean triple_dup = false;
@@ -27,6 +29,7 @@ public class StudentServerStrategy implements ServerStrategy{
 		this.file = file;
 		acks = new boolean[file.size()];
 		ack_tally = new int[file.size()];
+		bad_rtt_count = new int[file.size()];
 	}
 
 	public void reset(){
@@ -35,7 +38,10 @@ public class StudentServerStrategy implements ServerStrategy{
 	}
 
 	public List<Message> sendRcv(List<Message> clientMsgs){
-		if (clientMsgs.size() == 0) bad_rtt_count ++;
+		System.out.println("=================RTT " +RTT + "====================" );
+		RTT++;
+	
+	
 		for(Message m: clientMsgs){
 			//if
 			acks[m.num-1] =true;
@@ -44,29 +50,31 @@ public class StudentServerStrategy implements ServerStrategy{
 		int firstUnACKed = 0;
 		List<Message> msgs = new ArrayList<Message>();
 		while( firstUnACKed < acks.length && acks[firstUnACKed]) ++firstUnACKed;
+		
 			if(firstUnACKed< acks.length) {
+				if (clientMsgs.size() == 0) bad_rtt_count[firstUnACKed] ++;
+				
 				ack_tally[firstUnACKed] +=1;
 				//System.out.println(firstUnACKed + "   " +ack_tally[firstUnACKed]);
 				if (ack_tally[firstUnACKed] >2) triple_dup = true;
-				if (bad_rtt_count >3) timeout = true;
+				if (bad_rtt_count[firstUnACKed] >3) timeout = true;
 				
 				//TODO Check if congestion
-				if(cwnd < ssthresh && slowStart) {
-					cwnd*=2;
-				}
-				else if(triple_dup) {
+
+				if(triple_dup) {
 					ssthresh = cwnd/2;
 					cwnd = ssthresh; 
 					slowStart = false;	
 					triple_dup = false;
 				}
-				else if(timeout) {//TODO
+				else if(timeout) {
 					ssthresh = cwnd/2;
 					cwnd = 1;
 					timeout = false;
 					slowStart = true;
 				}
-							
+				
+					
 				// TODO Send 
 				if(acks.length > 0) {
 					for(int i = firstUnACKed; i <= cwnd; i++) {
@@ -75,8 +83,12 @@ public class StudentServerStrategy implements ServerStrategy{
 				  }
 				  if(!slowStart) cwnd ++;
 		    }
+		    if(cwnd < ssthresh && slowStart) {
+					if (cwnd ==1) cwnd ++;
+					else cwnd*=2;
+      	}
       }
 		return msgs;
 	}
-    
+  
 }

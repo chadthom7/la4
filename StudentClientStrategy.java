@@ -17,8 +17,9 @@ public class StudentClientStrategy implements ClientStrategy{
 	}
 
 	public List<Message> sendRcv(List<Message> serverMsgs){
-		RTT++;
+	
 		System.out.println("=================RTT " +RTT + "====================" );
+		RTT++;
 		for(Message m : serverMsgs){
 			while(file.size() < m.num+1) file.add(null);
 			file.set(m.num,m.msg);

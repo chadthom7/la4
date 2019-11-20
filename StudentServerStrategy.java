@@ -41,53 +41,46 @@ public class StudentServerStrategy implements ServerStrategy{
 		System.out.println("=================RTT " +RTT + "====================" );
 		RTT++;
 	
-	
 		for(Message m: clientMsgs){
-			//if
 			acks[m.num-1] =true;
 			System.out.println(m.num+","+m.msg);
 		}
+		
 		int firstUnACKed = 0;
 		List<Message> msgs = new ArrayList<Message>();
 		while( firstUnACKed < acks.length && acks[firstUnACKed]) ++firstUnACKed;
-		
-			if(firstUnACKed< acks.length) {
-				if (clientMsgs.size() == 0) bad_rtt_count[firstUnACKed] ++;
-				
-				ack_tally[firstUnACKed] +=1;
-				//System.out.println(firstUnACKed + "   " +ack_tally[firstUnACKed]);
-				if (ack_tally[firstUnACKed] >2) triple_dup = true;
-				if (bad_rtt_count[firstUnACKed] >3) timeout = true;
-				
-				//TODO Check if congestion
-
-				if(triple_dup) {
-					ssthresh = cwnd/2;
-					cwnd = ssthresh; 
-					slowStart = false;	
-					triple_dup = false;
-				}
-				else if(timeout) {
-					ssthresh = cwnd/2;
-					cwnd = 1;
-					timeout = false;
-					slowStart = true;
-				}
+		//System.out.println(firstUnACKed);
+		if(firstUnACKed< acks.length) {
+			if (clientMsgs.size() == 0) bad_rtt_count[firstUnACKed] ++;
+			ack_tally[firstUnACKed] +=1;
+			//System.out.println(firstUnACKed + "   " +ack_tally[firstUnACKed]);
+			if (ack_tally[firstUnACKed] >2) triple_dup = true;
+			if (bad_rtt_count[firstUnACKed] >3) timeout = true;
+		}
+			//TODO Check if congestion
+			if(triple_dup) {
+				//System.out.println("TrIP");
+				ssthresh = cwnd/2;
+				cwnd = ssthresh; 
+				slowStart = false;	
+				triple_dup = false;
+			}
+			else if(timeout) {
+				//System.out.println("TIMEOUT");
+				ssthresh = cwnd/2;
+				cwnd = 1;
+				timeout = false;
+				slowStart = true;
+			}
 				
 					
-				// TODO Send 
-				if(acks.length > 0) {
-					for(int i = firstUnACKed; i <= cwnd; i++) {
-						//if(i < acks.length) {
-							if (i < acks.length) msgs.add(new Message(i,file.get(i)));   
-				  }
-				  if(!slowStart) cwnd ++;
-		    }
-		    if(cwnd < ssthresh && slowStart) {
-					if (cwnd ==1) cwnd ++;
-					else cwnd*=2;
-      	}
-      }
+		if(acks.length > 0 ) { //&& (firstUnACKed< acks.length)
+			for(int i = firstUnACKed; i <= cwnd; i++) {
+					if (i < acks.length) msgs.add(new Message(i,file.get(i)));   
+		  }
+		  if(!slowStart && cwnd !=1) {cwnd ++;} else if(cwnd < ssthresh) {cwnd=cwnd*2;}
+    }
+		if (slowStart && cwnd ==1) cwnd +=1;
 		return msgs;
 	}
   

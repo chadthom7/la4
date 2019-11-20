@@ -25,10 +25,18 @@ public class StudentClientStrategy implements ClientStrategy{
 			file.set(m.num,m.msg);
 			System.out.println(m.num+","+m.msg);
 		}
+		
+
+		
+		
+		
 		int nextNeeded = 0;
 		while(nextNeeded <file.size() && file.get(nextNeeded)!=null)
 			++nextNeeded;
-		
+		for(int i = 1; i < serverMsgs.size(); i++) {
+			if (serverMsgs.get(i-1).num != serverMsgs.get(i).num-1)
+				nextNeeded = serverMsgs.get(i-1).num + 1;
+		}
 		// nextNeeded = the first missing message
 				
 		// TODO send all the acks

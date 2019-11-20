@@ -7,46 +7,51 @@ length=100
 duplicate=0.001
 RTT = 0
 Server Received: ;
-Server Replied: 0,M_0;1,M_1;2,M_2
-Client Received: 0,M_0;1,M_1;2,M_2
-Client Responded: 1,ACK;2,ACK;3,ACK
+Server Replied: 0,M_0;1,M_1
+Client Received: 0,M_0;1,M_1
+Client Responded: 1,ACK;2,ACK
 RTT = 1
-Server Received: 1,ACK;3,ACK
-Server Replied: 1,M_1;2,M_2;3,M_3;4,M_4
-Client Received: 1,M_1;2,M_2;3,M_3;4,M_4
-Client Responded: 2,ACK;3,ACK;4,ACK;5,ACK
+Server Received: 1,ACK;2,ACK
+Server Replied: 2,M_2
+Client Received: 2,M_2
+Client Responded: 3,ACK
 RTT = 2
-Server Received: 2,ACK;3,ACK;4,ACK;5,ACK
+Server Received: 3,ACK
+Server Replied: 3,M_3;4,M_4
+Client Received: 3,M_3;4,M_4
+Client Responded: 4,ACK;5,ACK
+RTT = 3
+Server Received: 4,ACK;5,ACK
 Server Replied: 5,M_5;6,M_6;7,M_7;8,M_8
 Client Received: 5,M_5;6,M_6;7,M_7;8,M_8
 Client Responded: 6,ACK;7,ACK;8,ACK;9,ACK
-RTT = 3
+RTT = 4
 Server Received: 6,ACK;7,ACK;8,ACK;9,ACK
 Server Replied: 9,M_9;10,M_10;11,M_11;12,M_12;13,M_13;14,M_14;15,M_15;16,M_16
 Client Received: 9,M_9;10,M_10;11,M_11;12,M_12;13,M_13;14,M_14;15,M_15;16,M_16
 Client Responded: 10,ACK;11,ACK;12,ACK;13,ACK;14,ACK;15,ACK;16,ACK;17,ACK
-RTT = 4
+RTT = 5
 Server Received: 10,ACK;11,ACK;12,ACK;13,ACK;14,ACK;15,ACK;16,ACK;17,ACK
 Server Replied: 17,M_17;18,M_18;19,M_19;20,M_20;21,M_21;22,M_22;23,M_23;24,M_24;25,M_25;26,M_26;27,M_27;28,M_28;29,M_29;30,M_30;31,M_31;32,M_32
 Client Received: 17,M_17;18,M_18;19,M_19;20,M_20;21,M_21;22,M_22;23,M_23;24,M_24;25,M_25;26,M_26;27,M_27;28,M_28;29,M_29;30,M_30;31,M_31;32,M_32
 Client Responded: 18,ACK;19,ACK;20,ACK;21,ACK;22,ACK;23,ACK;24,ACK;25,ACK;26,ACK;27,ACK;28,ACK;29,ACK;30,ACK;31,ACK;32,ACK;33,ACK
-RTT = 5
-Server Received: 19,ACK;20,ACK;21,ACK;22,ACK;23,ACK;24,ACK;25,ACK;26,ACK;27,ACK;28,ACK;29,ACK;30,ACK;31,ACK;33,ACK
-Server Replied: 17,M_17;18,M_18;19,M_19;20,M_20;21,M_21;22,M_22;23,M_23;24,M_24;25,M_25;26,M_26;27,M_27;28,M_28;29,M_29;30,M_30;31,M_31;32,M_32
-Client Received: 18,M_18;19,M_19;20,M_20;21,M_21;22,M_22;23,M_23;24,M_24;25,M_25;26,M_26;27,M_27;28,M_28;29,M_29;30,M_30;32,M_32
-Client Responded: 19,ACK;20,ACK;21,ACK;22,ACK;23,ACK;24,ACK;25,ACK;26,ACK;27,ACK;28,ACK;29,ACK;30,ACK;31,ACK;32,ACK;33,ACK
 RTT = 6
-Server Received: 19,ACK;20,ACK;21,ACK;22,ACK;23,ACK;24,ACK;25,ACK;26,ACK;27,ACK;28,ACK;29,ACK;30,ACK;31,ACK;32,ACK;33,ACK
+Server Received: 18,ACK;19,ACK;20,ACK;22,ACK;23,ACK;24,ACK;25,ACK;26,ACK;27,ACK;28,ACK;29,ACK;30,ACK;31,ACK;32,ACK;33,ACK
+Server Replied: 20,M_20;21,M_21;22,M_22;23,M_23;24,M_24;25,M_25;26,M_26;27,M_27;28,M_28;29,M_29;30,M_30;31,M_31;32,M_32
+Client Received: 20,M_20;21,M_21;23,M_23;24,M_24;25,M_25;26,M_26;27,M_27;28,M_28;29,M_29;30,M_30;31,M_31;32,M_32
+Client Responded: 21,ACK;22,ACK
+RTT = 7
+Server Received: 21,ACK;22,ACK
 Server Replied: ;
 Client Received: ;
 Client Responded: ;
 Client Metrics
 Metric Report
-Received:49
-Sent:50
-RTTs:6
+Received:45
+Sent:35
+RTTs:7
 Server Metrics
 Metric Report
-Received:47
-Sent:51
-RTTs:6
+Received:34
+Sent:46
+RTTs:7

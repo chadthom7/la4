@@ -6,12 +6,15 @@ public class StudentServerStrategy implements ServerStrategy{
 	int[] ack_tally; //For checking number of times ACK has been received
 	int cwnd = 1;
 	int ssthresh = 32;
+	
+	int bad_rtt_count = 0;
 	boolean timeout = false;
 	// ssthresh = ssthresh/2; cwnd = 1; slowStart = true;
 	boolean triple_dup = false;
 	// ssthresh = ssthresh/2; cwnd = ssthresh;  slowStart = false;
 	boolean slowStart = true;
 	// if false, do congestion avoidance, else exponentially increase
+	
 	
 	
 	 
@@ -32,6 +35,7 @@ public class StudentServerStrategy implements ServerStrategy{
 	}
 
 	public List<Message> sendRcv(List<Message> clientMsgs){
+		if (clientMsgs.size() == 0) bad_rtt_count ++;
 		for(Message m: clientMsgs){
 			acks[m.num-1] =true;
 			System.out.println(m.num+","+m.msg);
@@ -41,13 +45,10 @@ public class StudentServerStrategy implements ServerStrategy{
 		while( firstUnACKed < acks.length && acks[firstUnACKed]) ++firstUnACKed;
 			ack_tally[firstUnACKed] +=1;
 			if (ack_tally[firstUnACKed] >2) triple_dup = true;
-			// Slow start
-			//while() {    //firstUnACKed < acks.length) {
+			if (bad_rtt_count >3) timeout = true;
+			
 			
 			//TODO Check if congestion
-			
-			
-			// TODO increment counter
 			if(cwnd < ssthresh && slowStart) {
 				cwnd*=2;
 			}
@@ -58,14 +59,16 @@ public class StudentServerStrategy implements ServerStrategy{
 				triple_dup = false;
 			}
 			else if(timeout) {//TODO
+				ssthresh = cwnd/2;
+				cwnd = 1;
 				timeout = false;
+				slowStart = true;
 			}
-			
-			
+						
 			// TODO Send 
-			for(int i = firstUnAcked; i < cwnd; i++) {
+			for(int i = firstUnACKed; i <= cwnd; i++) {
 				//if(i < acks.length) {
-					if (i< acks.length) msgs.add(new Message(i,file.get(i)));   
+					if (i < acks.length) msgs.add(new Message(i,file.get(i)));   
       }
       if(!slowStart) cwnd ++; 
 		return msgs;

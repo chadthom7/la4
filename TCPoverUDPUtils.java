@@ -10,8 +10,8 @@ public class TCPoverUDPUtils{
 	// OneByOneStrategy() is an example way server sends the file to client
 	// comment out OneByOneStrategy() and uncomment StudentStrategy() to 
 	// load your own strategy
-        return new OneByOneStrategy();
-        //return new StudentStrategy();
+        //return new OneByOneStrategy();
+        return new StudentStrategy();
     }
 
     public static Map<String,String> parseSettings(String fileName){

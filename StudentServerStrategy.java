@@ -19,9 +19,13 @@ public class StudentServerStrategy implements ServerStrategy{
 
     public List<Message> sendRcv(List<Message> clientMsgs){
         int cwnd = 1;
-        int ssthresh;
+        int ssthresh = 32;
         boolean slowStart = true; // false = congestion avoidance; true = slow start
         
+        // Slow start
+        while(cwnd < ssthresh) {
+            
+        }
 
 
         //return clientMsgs; //obviously wrong

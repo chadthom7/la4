@@ -2,7 +2,7 @@ import java.util.*;
 
 public class StudentClientStrategy implements ClientStrategy{
 	ArrayList<String> file;
-
+	int RTT = 0;
 
 	public StudentClientStrategy(){
 		  reset();
@@ -17,6 +17,8 @@ public class StudentClientStrategy implements ClientStrategy{
 	}
 
 	public List<Message> sendRcv(List<Message> serverMsgs){
+		RTT++;
+		System.out.println("=================RTT " +RTT + "====================" );
 		for(Message m : serverMsgs){
 			while(file.size() < m.num+1) file.add(null);
 			file.set(m.num,m.msg);
@@ -30,8 +32,13 @@ public class StudentClientStrategy implements ClientStrategy{
 				
 		// TODO send all the acks
 		List<Message> ack = new ArrayList<Message>();
-		for(int i = serverMsgs.get(0).num; i < nextNeeded; i++) {
+		if (serverMsgs.size() >0){
+		for(int i  = serverMsgs.get(0).num +1; i <= nextNeeded; i++) {
+			//System.out.println(i+ "-----" + serverMsgs.size() +"-----" + file.size());
+			
 			ack.add(new Message(i,"ACK"));
+			System.out.println(i);
+		}
 		}
 		return ack;
 	

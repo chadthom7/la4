@@ -1,0 +1,8 @@
+CSCE416-Lab 4
+Created by Carter Venable and Chad Thomas
+
+Chad:
+	Planned, Structured, and helped design a TCP congestion control protocol for server and client. Worked on planning structure for StudentServerStrategy and ClientServerStrategy and implementing plan/debugging.
+
+Carter:
+	Planned and helped with designing flow of StudentServerStrategy and ClientServerStrategy and designed TCP congestion control algorithm. Assisted in debugging and scenario testing.

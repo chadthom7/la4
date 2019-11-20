@@ -1,1 +1,6 @@
-
+ClientDownloads
+ClientDownloads/*
+ServerFiles
+ServerFiles/*
+NetworkLogs
+NetworkLogs/*

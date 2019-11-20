@@ -16,7 +16,7 @@ public class OneByOneServerStrategy implements ServerStrategy{
 
     }
 
-    public List<Message> sendRcv(List<Message> clientMsgs){
+    public List<Message> sendRcv(List<Message> clientMsgs){ //Recieves a certain amount of msgs
         for(Message m: clientMsgs){
             acks[m.num-1] =true;
             System.out.println(m.num+","+m.msg);

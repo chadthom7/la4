@@ -1,4 +1,4 @@
 Metric Report
-Received:3
+Received:10
 Sent:10
-RTTs:3
+RTTs:10

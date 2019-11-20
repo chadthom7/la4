@@ -2,7 +2,7 @@ import java.util.*;
 
 public class StudentServerStrategy implements ServerStrategy{
 		List<String> file;
-
+        boolean[] acks;
 
 		public StudentServerStrategy(){
 				reset();
@@ -10,6 +10,7 @@ public class StudentServerStrategy implements ServerStrategy{
 
 		public void setFile(List<String> file){
 				this.file = file;
+                acks = new boolean[file.size()];
 		}
 
 		public void reset(){
@@ -43,7 +44,7 @@ public class StudentServerStrategy implements ServerStrategy{
 			
 			// TODO increment counter
 			if(cwnd < ssthresh && slowStart) {
-				
+				firstUnACKed*=2;
 			}
 			else if(triple_dup) {
 				

@@ -49,32 +49,31 @@ public class StudentServerStrategy implements ServerStrategy{
 		int firstUnACKed = 0;
 		List<Message> msgs = new ArrayList<Message>();
 		while( firstUnACKed < acks.length && acks[firstUnACKed]) ++firstUnACKed;
-		//System.out.println(firstUnACKed);
-		if(firstUnACKed< acks.length) {
+		
+		
+		if(firstUnACKed< acks.length) { //Count dup acks and missing acks
 			if (clientMsgs.size() == 0) bad_rtt_count[firstUnACKed] ++;
 			ack_tally[firstUnACKed] +=1;
-			//System.out.println(firstUnACKed + "   " +ack_tally[firstUnACKed]);
 			if (ack_tally[firstUnACKed] >2) triple_dup = true;
-			if (bad_rtt_count[firstUnACKed] >3) timeout = true;
+			if (bad_rtt_count[firstUnACKed] >3 ) timeout = true; //maybe check if >2
 		}
-			//TODO Check if congestion
-			if(triple_dup) {
-				//System.out.println("TrIP");
-				ssthresh = cwnd/2;
-				cwnd = ssthresh; 
-				slowStart = false;	
-				triple_dup = false;
-			}
-			else if(timeout) {
-				//System.out.println("TIMEOUT");
-				ssthresh = cwnd/2;
-				cwnd = 1;
-				timeout = false;
-				slowStart = true;
-			}
-				
+		
+		//Check if congestion
+		if(triple_dup) {
+			ssthresh = cwnd/2;
+			cwnd = ssthresh; 
+			slowStart = false;	
+			triple_dup = false;
+		}
+		else if(timeout) {
+			ssthresh = cwnd/2;
+			cwnd = 1;
+			timeout = false;
+			slowStart = true;
+		}
+			
 					
-		if(acks.length > 0 ) { //&& (firstUnACKed< acks.length)
+		if(acks.length > 0 ) {
 			for(int i = firstUnACKed; i <= cwnd; i++) {
 					if (i < acks.length) msgs.add(new Message(i,file.get(i)));   
 		  }
